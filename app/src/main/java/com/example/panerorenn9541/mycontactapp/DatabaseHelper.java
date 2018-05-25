@@ -2,13 +2,14 @@ package com.example.panerorenn9541.mycontactapp;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 5;
     public static final String DATABASE_NAME = "Contact2018.db";
     public static final String TABLE_NAME = "Contact2018_table";
     public static final String ID = "ID";
@@ -18,10 +19,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE " + TABLE_NAME + " (" +
-                    ID +" INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    COLUMN_NAME_CONTACT + " TEXT)" +
-                    COLUMN_PHONE_CONTACT + " TEXT)"+
-                    COLUMN_ADDRESS_CONTACT + " TEXT)";
+                    ID +" INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    COLUMN_NAME_CONTACT+  " TEXT)";
+
+    public static final String SQL_CREATE_ENTRIES_PHONE =
+            "CREATE TABLE " + TABLE_NAME + "1" + " (" +
+                    ID +" INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    + COLUMN_PHONE_CONTACT +" TEXT)";
+
+    public static final String SQL_CREATE_ENTRIES_ADDRESS =
+            "CREATE TABLE " + TABLE_NAME + "2" + " (" +
+                    ID +" INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    + COLUMN_ADDRESS_CONTACT +" TEXT)";
+
+
+
 
     public static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + TABLE_NAME;
@@ -37,6 +49,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         Log.d("MyContactApp", "Databasehelper: creating database");
         db.execSQL(SQL_CREATE_ENTRIES);
+        db.execSQL(SQL_CREATE_ENTRIES_PHONE);
+        db.execSQL(SQL_CREATE_ENTRIES_ADDRESS);
+
     }
 
     @Override
@@ -66,6 +81,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Log.d("MyContactApp", "Databasehelper: contact insert passed");
             return true;
         }
+    }
+
+    public Cursor getAllData()
+    {
+        Log.d("MyContactApp", "Databasehelper: calling getAllData method");
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("select * from " + TABLE_NAME, null);
+        return cursor;
     }
 
 }
