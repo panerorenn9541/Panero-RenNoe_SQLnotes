@@ -57,8 +57,11 @@ public class MainActivity extends AppCompatActivity {
         {
             //append res column 0, 1, 2, 3 to the buffer
             buffer.append(res.getString(0));
+            buffer.append(" ");
             buffer.append(res.getString(1));
+            buffer.append(" ");
             buffer.append(res.getString(2));
+            buffer.append(" ");
             buffer.append(res.getString(3));
         }
         Log.d("MyContactApp", "MainActivity: viewData: assembled stringbuffer");
