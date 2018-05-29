@@ -1,6 +1,7 @@
 package com.example.panerorenn9541.mycontactapp;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -63,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
             buffer.append(res.getString(2));
             buffer.append(" ");
             buffer.append(res.getString(3));
+            buffer.append("\n");
         }
         Log.d("MyContactApp", "MainActivity: viewData: assembled stringbuffer");
         showMessage("data", buffer.toString());
@@ -70,13 +72,23 @@ public class MainActivity extends AppCompatActivity {
 
     private void showMessage(String title, String message)
     {
-        Log.d("MyContactApp" ,"MainActivity: showMessage: buliding alert dialog");
+        Log.d("MyContactApp" ,"MainActivity: showMessage: building alert dialog");
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(true);
         builder.setTitle(title);
         builder.setMessage(message);
         builder.show();
+
+    }
+
+    public static final String EXTRA_MESSAGE = "com.example.panerorenn9541.mycontactapp.MESSAGE";
+    public void SearchRecord(View view)
+    {
+        Log.d("MyContactApp", "MainActivity: launching SearchActivity");
+        Intent intent = new Intent(this, SearchActivity.class);
+        intent.putExtra(EXTRA_MESSAGE, editName.getText().toString());
+        startActivity(intent);
 
     }
 
