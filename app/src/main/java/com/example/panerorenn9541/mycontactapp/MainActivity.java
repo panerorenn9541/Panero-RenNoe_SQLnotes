@@ -87,7 +87,27 @@ public class MainActivity extends AppCompatActivity {
     {
         Log.d("MyContactApp", "MainActivity: launching SearchActivity");
         Intent intent = new Intent(this, SearchActivity.class);
-        intent.putExtra(EXTRA_MESSAGE, editName.getText().toString());
+        Cursor res = myDB.getAllData();
+        Log.d("MyContactApp", "MainActivity: searchRecord: received cursor" + res.getCount());
+        if(res.getCount() == 0)
+        {
+            showMessage("Error", "No data found in database");
+            return;
+        }
+        StringBuffer buffer = new StringBuffer();
+        while(res.moveToNext()) {
+            if (res.getString(1).equals(editName.getText().toString())) {
+                buffer.append("Number: " + res.getString(0) + "\n" + "Name: " + res.getString(1) + "\n" + "Address: " + res.getString(2) + "\n" + "Phone Number: " + res.getString(3) + "\n\n");
+            }
+
+
+        }
+
+        if(buffer.length() == 0)
+        {
+            buffer.append("Nobody with the name " + editName.getText().toString() + "\nfound in the database");
+        }
+        intent.putExtra(EXTRA_MESSAGE, buffer.toString());
         startActivity(intent);
 
     }
