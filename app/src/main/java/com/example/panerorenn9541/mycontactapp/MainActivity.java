@@ -95,11 +95,12 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         StringBuffer buffer = new StringBuffer();
-        while(res.moveToNext()) {
-            if (res.getString(1).equals(editName.getText().toString())) {
-                buffer.append("Number: " + res.getString(0) + "\n" + "Name: " + res.getString(1) + "\n" + "Address: " + res.getString(2) + "\n" + "Phone Number: " + res.getString(3) + "\n\n");
+        while(res.moveToNext())
+        {
+            if (res.getString(1).equals(editName.getText().toString()))
+            {
+                buffer.append("Contact: " + res.getString(0) + "\n" + "Name: " + res.getString(1) + "\n" + "Address: " + res.getString(3) + "\n" + "Phone Number: " + res.getString(2) + "\n\n");
             }
-
 
         }
 
